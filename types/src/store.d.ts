@@ -17,7 +17,7 @@ interface pluginsFunc {
 interface pluginsObject {
     [key: string]: pluginsFunc;
 }
-declare class FlexStorage {
+declare class Sprage {
     static plugins: pluginsObject;
     constructor();
     get(param: string): any;

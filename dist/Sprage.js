@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["FlexStorage"] = factory();
+		exports["Sprage"] = factory();
 	else
-		root["FlexStorage"] = factory();
+		root["Sprage"] = factory();
 })(this, function() {
 return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -25,9 +25,8 @@ module.exports = __webpack_require__(1);
 
 const date = __webpack_require__(2);
 const utils = __webpack_require__(3);
-class FlexStorage {
+class Sprage {
     constructor() {
-        FlexStorage.install("time", new date().timeInvertFn);
     }
     get(param) {
         let str = this.getFirst(param);
@@ -123,7 +122,7 @@ class FlexStorage {
     }
     // 设置过期时间的方法,会使用一个叫time的,可自定义的插件
     setTime(params, expiration) {
-        expiration = FlexStorage.plugins.time(expiration);
+        expiration = Sprage.plugins.time(expiration);
         if (typeof expiration == "string") {
         }
         for (let item in params) {
@@ -165,12 +164,13 @@ class FlexStorage {
     }
     // 使用插件
     static install(name, descriptor) {
-        FlexStorage.plugins[name] = descriptor;
+        Sprage.plugins[name] = descriptor;
     }
 }
 // 静态插件对象
-FlexStorage.plugins = {};
-module.exports = FlexStorage;
+Sprage.plugins = {};
+Sprage.install("time", new date().timeInvertFn);
+module.exports = Sprage;
 
 
 /***/ }),
