@@ -162,6 +162,18 @@ class Sprage {
             }
         });
     }
+    isFull() {
+        return !(this.surplus(true) > 0);
+    }
+    size(isNumber = false) {
+        let size = Object.entries(localStorage).map(val => val.join('')).join('').length;
+        return isNumber ? size.toFixed(2) : size.toFixed(2) + 'KB';
+    }
+    surplus(isNumber = false) {
+        let sum = 5 * 1024;
+        let cache = this.size(true);
+        return isNumber ? (sum - cache).toFixed(2) : (sum - cache).toFixed(2) + 'KB';
+    }
     // 使用插件
     static install(name, descriptor) {
         Sprage.plugins[name] = descriptor;

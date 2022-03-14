@@ -7,6 +7,7 @@
 * 支持设置过期时间
 * 支持多种日期格式
 * 支持定义使用次数
+* 可检测占用空间和剩余空间
 * 时间戳处理可自定义插件
 
 ## 安装
@@ -32,6 +33,10 @@ $ yarn add sprage
 ``` js
     import Sprage from 'sprage'
     let sprage=new Sprage()
+```
+使用cdn引入
+```js
+<script src="https://cdn.jsdelivr.net/npm/sprage@1.1.2/dist/Sprage.min.js"></script>
 ```
 
 ## 基本用法
@@ -97,6 +102,9 @@ $ yarn add sprage
         store.forEach((key,val)=>{
             // key,val分别是每一个存入的键和值
         })
+        // 检测已经占用的空间和剩余空间
+        console.log(store.size())   //已经使用117.00KB
+        console.log(store.surplus()) //剩余空间4943.00KB
 ```
 
 ## 使用插件

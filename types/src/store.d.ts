@@ -32,5 +32,8 @@ declare class Sprage {
     setTime(params: KeyValueObject, expiration: number | string): void;
     getAll(): KeyValueObject[];
     forEach(fn: func): void;
+    isFull(): boolean;
+    size(isNumber?: boolean): string | number;
+    surplus(isNumber?: boolean): string | number;
     static install(name: string, descriptor: any): void;
 }

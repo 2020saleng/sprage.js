@@ -11,9 +11,9 @@
 <body>
     <div>text</div>
 </body>
-<script src="./dist/Strage.js"></script>
+<script src="../dist/Sprage.js"></script>
 <script>
-    console.log(new Strage())
+    let store = new Sprage()
         // store.set('foo', 'boo')
         // console.log(store.get('foo')) //'boo'
         // store.set({
@@ -31,7 +31,9 @@
         // console.log(store.get('msg')) //{title: 'ts',num: 12}
         // console.log(store.has('foo')) //true
         // store.remove(['foo', 'name', 'age'])
-        // console.log(store.get('foo')) //null
+    console.log(store.size())
+    console.log(store.surplus()) //null
+    console.log(store.getAll())
 </script>
 
 </html>

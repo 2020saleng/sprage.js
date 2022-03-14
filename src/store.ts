@@ -164,6 +164,18 @@ class Sprage {
       }
     });
   }
+    isFull():boolean{
+        return !(this.surplus(true)>0)
+    }
+    size(isNumber:boolean=false):string|number{
+        let size= Object.entries(localStorage).map(val=>val.join('')).join('').length; 
+        return isNumber?size.toFixed(2):size.toFixed(2)+'KB';
+    }
+    surplus(isNumber:boolean=false):string|number{
+        let sum:number=5*1024;
+        let cache=<number>this.size(true)
+        return isNumber?(sum-cache).toFixed(2):(sum-cache).toFixed(2)+'KB'
+    }
   // 使用插件
   static install(name: string, descriptor: any) {
    Sprage.plugins[name] = descriptor;
