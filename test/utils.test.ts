@@ -29,5 +29,5 @@ test("checkTime测试", () => {
   expect(utilsTest.checkTime(100)).toBe(false);
 });
 test("checkTime测试", () => {
-  expect(utilsTest.checkTime(new Date().getTime()+1000)).toBe(true);
+  expect(utilsTest.checkTime(new Date().getTime() + 1000)).toBe(true);
 });

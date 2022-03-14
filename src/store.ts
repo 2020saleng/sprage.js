@@ -24,9 +24,12 @@ interface pluginsObject {
 }
 class Sprage {
   // 静态插件对象
+  protected autoClear: boolean;
+  protected exclude: string[];
   static plugins: pluginsObject = {};
-  constructor() {
- 
+  constructor(option: KeyValueObject = { autoClear: true, exclude: [] }) {
+    this.autoClear = option.autoClear;
+    this.exclude = option.exclude ? option.exclude : [];
   }
   get(param: string) {
     let str: string | tokenObject | KeyValueObject = this.getFirst(param);
@@ -54,26 +57,54 @@ class Sprage {
     let str: string | null = localStorage.getItem(key);
     return str == null ? null : JSON.parse(str);
   }
-  set(
-    param: string | KeyValueObject,
-    val?: string | KeyValueObject,
-    expiration?: number
-  ): boolean {
+  set(param: string | KeyValueObject, val?: string | KeyValueObject): boolean {
+    const self = this;
     if (typeof param == "string" && val) {
       if (utils.isNull(val)) {
         throw "The value cannot be empty";
       }
-      localStorage.setItem(param, JSON.stringify(val));
+      setItem(param, JSON.stringify(val));
     } else if (typeof param == "object") {
       for (let item in param) {
         param.hasOwnProperty(item)
-          ? localStorage.setItem(item, JSON.stringify(param[item]))
+          ? setItem(item, JSON.stringify(param[item]))
           : null;
       }
     } else {
       return false;
     }
     return true;
+    function setItem(key: string, val: any): void {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch {
+        let size =
+          <number>self.size(true) + key.length + JSON.stringify(val).length;
+        if (self.isFull(size) && self.autoClear) {
+          while (true) {
+            let index = 0;
+            for (; index < self.getAll().length; index++) {
+              if (
+                self.exclude.indexOf(Object.keys(self.getAll()[index])[0]) != -1
+              )
+                continue;
+              break;
+            }
+            if (index == self.getAll().length) {
+              throw "The legal space is full ";
+            }
+            let removeValue = Object.keys(self.getAll()[index])[0];
+            localStorage.removeItem(removeValue);
+            if (!self.isFull(size)) {
+              setItem(key, val);
+              break;
+            }
+          }
+        } else {
+          console.error("error in setItem");
+        }
+      }
+    }
   }
   // 判断某个键值是否存在
   has(key: string): boolean {
@@ -164,21 +195,29 @@ class Sprage {
       }
     });
   }
-    isFull():boolean{
-        return !(this.surplus(true)>0)
+  isFull(param?: number): boolean {
+    if (param) {
+      return !(Number(this.size(true)) + Number(param) < 5 * 1024);
     }
-    size(isNumber:boolean=false):string|number{
-        let size= Object.entries(localStorage).map(val=>val.join('')).join('').length; 
-        return isNumber?size.toFixed(2):size.toFixed(2)+'KB';
-    }
-    surplus(isNumber:boolean=false):string|number{
-        let sum:number=5*1024;
-        let cache=<number>this.size(true)
-        return isNumber?(sum-cache).toFixed(2):(sum-cache).toFixed(2)+'KB'
-    }
+    return !(this.surplus(true) > 0);
+  }
+  size(isNumber: boolean = false): string | number {
+    let size =
+      Object.entries(localStorage)
+        .map((val) => val.join(""))
+        .join("").length / 1024;
+    return isNumber ? size.toFixed(2) : size.toFixed(2) + "KB";
+  }
+  surplus(isNumber: boolean = false): string | number {
+    let sum: number = 5 * 1024;
+    let cache = <number>this.size(true);
+    return isNumber
+      ? (sum - cache).toFixed(2)
+      : (sum - cache).toFixed(2) + "KB";
+  }
   // 使用插件
   static install(name: string, descriptor: any) {
-   Sprage.plugins[name] = descriptor;
+    Sprage.plugins[name] = descriptor;
   }
 }
 Sprage.install("time", new date().timeInvertFn);

@@ -1,39 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=\, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div>text</div>
-</body>
-<script src="../dist/Sprage.js"></script>
-<script>
-    let store = new Sprage()
-        // store.set('foo', 'boo')
-        // console.log(store.get('foo')) //'boo'
-        // store.set({
-        //     name: 'sam',
-        //     age: '11'
-        // })
-        // console.log(store.get('name')) //sam
-        // console.log(store.get('age')) //'11'
-        // store.set(
-        //     'msg', {
-        //         title: 'ts',
-        //         num: 12
-        //     }
-        // )
-        // console.log(store.get('msg')) //{title: 'ts',num: 12}
-        // console.log(store.has('foo')) //true
-        // store.remove(['foo', 'name', 'age'])
-    console.log(store.size())
-    console.log(store.surplus()) //null
-    console.log(store.getAll())
-</script>
-
+  </body>
+  <script src="../dist/Sprage.js"></script>
+  <script>
+    let store = new Sprage({
+      autoClear: true,
+      exclude: ["only"],
+    });
+    const charTxt = "0";
+    let count = (9 * 1024 * 1024) / 2;
+    let content = new Array(count).fill(charTxt).join("");
+    store.set("only", "1");
+    store.set("long", content);
+    store.set("long2", content);
+    // store.set('foo', 'boo')
+    // console.log(store.get('foo')) //'boo'
+    // store.set({
+    //     name: 'sam',
+    //     age: '11'
+    // })
+    // console.log(store.get('name')) //sam
+    // console.log(store.get('age')) //'11'
+    // store.set(
+    //     'msg', {
+    //         title: 'ts',
+    //         num: 12
+    //     }
+    // )
+    // console.log(store.get('msg')) //{title: 'ts',num: 12}
+    // console.log(store.has('foo')) //true
+    // store.remove(['foo', 'name', 'age'])
+    // store.clear()
+    console.log(store.size());
+    console.log(store.surplus()); //null
+    console.log(store.getAll());
+    store.clear();
+  </script>
 </html>
