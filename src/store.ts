@@ -153,7 +153,7 @@ class Sprage {
     this.setCount(params, 1);
   }
   // 设置过期时间的方法,会使用一个叫time的,可自定义的插件
-// 伪清除
+  // 伪清除
   setTime(params: KeyValueObject, expiration: number | string): void {
     expiration = Sprage.plugins.time(expiration);
     if (typeof expiration == "string") {
@@ -223,4 +223,3 @@ class Sprage {
 }
 Sprage.install("time", new date().timeInvertFn);
 module.exports = Sprage;
-
