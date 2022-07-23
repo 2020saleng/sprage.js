@@ -11,63 +11,91 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ([
-/* 0 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/* 0 */,
+/* 1 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initMethods": () => (/* binding */ initMethods)
+/* harmony export */ });
+/* harmony import */ var _baseMethods_initGet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _baseMethods_initRemove__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+/* harmony import */ var _baseMethods_initHas__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
+/* harmony import */ var _setMethods_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6);
+/* harmony import */ var _baseMethods_initClear__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9);
+/* harmony import */ var _utilsMethods_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(10);
 
 
-module.exports = __webpack_require__(4);
+
+
+
+
+function initMethods(vm) {
+    (0,_utilsMethods_index__WEBPACK_IMPORTED_MODULE_5__.initUtilsMethods)(vm);
+    (0,_setMethods_index__WEBPACK_IMPORTED_MODULE_3__.initSetMethods)(vm);
+    (0,_baseMethods_initHas__WEBPACK_IMPORTED_MODULE_2__.initHas)(vm);
+    (0,_baseMethods_initRemove__WEBPACK_IMPORTED_MODULE_1__.initRemove)(vm);
+    (0,_baseMethods_initGet__WEBPACK_IMPORTED_MODULE_0__.initGet)(vm);
+    (0,_baseMethods_initClear__WEBPACK_IMPORTED_MODULE_4__.initClear)(vm);
+}
 
 
 /***/ }),
-/* 1 */,
 /* 2 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-class TimeInver {
-    constructor() {
-        this.unitList = ["s", "min", "h", "day"];
-        this.timeList = [1000, 60000, 3600000, 86400000];
-    }
-    formatTimeInvert(param) {
-        const utils = __webpack_require__(3);
-        return utils.formatTimeInvert.call(this, param);
-    }
-    getIndex(param) {
-        for (let i = 0; i < this.unitList.length; i++) {
-            if (param.indexOf(this.unitList[i]) != -1) {
-                return i;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initGet": () => (/* binding */ initGet)
+/* harmony export */ });
+const utils = __webpack_require__(3);
+function initGet(vm) {
+    vm.get = function (param) {
+        let str = getStorageInit(param);
+        if (typeof str == "string") {
+            return str;
+        }
+        else if (str && str._token_) {
+            if (utils.checkTime(str._token_)) {
+                return str._Val;
+            }
+            this.remove(param);
+            return null;
+        }
+        else if (str && str._count_ != undefined) {
+            if (str._count_ > 0) {
+                let count = str._count_ - 1;
+                this.setCount({ [param]: str._Val }, count);
+                return str._Val;
+            }
+            this.remove(param);
+            return null;
+        }
+        return str;
+    };
+    vm.getAll = function () {
+        let List = [];
+        for (let index = 0; index < localStorage.length; index++) {
+            let temp = localStorage.key(index);
+            let val = JSON.parse(localStorage.getItem(temp));
+            if (typeof val != "object") {
+                List.push({ [temp]: val });
+            }
+            else if ("_Val" in val) {
+                List.push({ [temp]: val._Val });
+            }
+            else {
+                List.push({ [temp]: val });
             }
         }
-        return undefined;
-    }
-    afterTime(param, index) {
-        const now = new Date().getTime();
-        let time = Number(param.slice(0, param.length - this.unitList[index].length));
-        if (isNaN(time)) {
-            throw "time should be a number";
-        }
-        return now + time * this.timeList[index];
-    }
-    afterTimeInvert(param) {
-        param = param.trim();
-        let index = this.getIndex(param);
-        if (index === undefined) {
-            throw "unit is wrongfulness";
-        }
-        return this.afterTime(param, index);
-    }
-    timeInvert(params) {
-        return params.includes("-")
-            ? this.formatTimeInvert(params)
-            : this.afterTimeInvert(params);
-    }
-    timeInvertFn(params) {
-        let time = new TimeInver();
-        return time.timeInvert.call(time, params);
-    }
+        return List;
+    };
 }
-module.exports = TimeInver;
+function getStorageInit(key) {
+    let str = localStorage.getItem(key);
+    return str == null ? null : JSON.parse(str);
+}
 
 
 /***/ }),
@@ -109,46 +137,69 @@ module.exports = {
 
 /***/ }),
 /* 4 */
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initRemove": () => (/* binding */ initRemove)
+/* harmony export */ });
+function initRemove(vm) {
+    vm.remove = function (param) {
+        try {
+            if (typeof param == "string") {
+                removeItem(vm, param);
+            }
+            else {
+                param.forEach((element) => {
+                    this.removeItem(vm, element);
+                });
+            }
+            return true;
+        }
+        catch (_a) {
+            return false;
+        }
+    };
+}
+function removeItem(vm, param) {
+    vm.has(param) ? localStorage.removeItem(param) : null;
+}
 
 
-const date = __webpack_require__(2);
+/***/ }),
+/* 5 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initHas": () => (/* binding */ initHas)
+/* harmony export */ });
 const utils = __webpack_require__(3);
-class Sprage {
-    constructor(option = { autoClear: true, exclude: [] }) {
-        this.autoClear = option.autoClear;
-        this.exclude = option.exclude ? option.exclude : [];
-    }
-    get(param) {
-        let str = this.getFirst(param);
-        if (typeof str == "string") {
-            return str;
-        }
-        else if (str && str._token_) {
-            if (utils.checkTime(str._token_)) {
-                return str._Val;
-            }
-            this.remove(param);
-            return null;
-        }
-        else if (str && str._count_ != undefined) {
-            if (str._count_ > 0) {
-                let count = str._count_ - 1;
-                this.setCount({ [param]: str._Val }, count);
-                return str._Val;
-            }
-            this.remove(param);
-            return null;
-        }
-        return str;
-    }
-    // 获取并用JSON解析localStorage某个键的函数
-    getFirst(key) {
-        let str = localStorage.getItem(key);
-        return str == null ? null : JSON.parse(str);
-    }
-    set(param, val) {
-        const self = this;
+function initHas(vm) {
+    vm.has = function (key) {
+        return !utils.isNull(localStorage.getItem(key));
+    };
+}
+
+
+/***/ }),
+/* 6 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initSetMethods": () => (/* binding */ initSetMethods)
+/* harmony export */ });
+/* harmony import */ var _initSetCount__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _initSetTime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
+const utils = __webpack_require__(3);
+
+
+function initSetMethods(vm) {
+    (0,_initSetCount__WEBPACK_IMPORTED_MODULE_0__.initSetCount)(vm);
+    (0,_initSetTime__WEBPACK_IMPORTED_MODULE_1__.initSetTime)(vm);
+    vm.set = function (param, val) {
+        const self = vm;
         if (typeof param == "string" && val) {
             if (utils.isNull(val)) {
                 throw "The value cannot be empty";
@@ -196,57 +247,49 @@ class Sprage {
                 }
             }
         }
-    }
-    // 判断某个键值是否存在
-    has(key) {
-        return !utils.isNull(localStorage.getItem(key));
-    }
-    // 删除某个键值，支持使用数组批量删除
-    remove(param) {
-        try {
-            if (typeof param == "string") {
-                this.removeItem(param);
-            }
-            else {
-                param.forEach((element) => {
-                    this.removeItem(element);
-                });
-            }
-            return true;
-        }
-        catch (_a) {
-            return false;
-        }
-    }
-    // 调用API删除某个键的函数
-    removeItem(param) {
-        this.has(param) ? localStorage.removeItem(param) : null;
-    }
-    // 清除所有函数
-    clear() {
-        localStorage.clear();
-    }
-    // 设置使用次数的函数,要求使用对象语法
-    setCount(params, count) {
+    };
+}
+
+
+/***/ }),
+/* 7 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initSetCount": () => (/* binding */ initSetCount)
+/* harmony export */ });
+function initSetCount(vm) {
+    vm.setCount = function (params, count) {
         for (let item in params) {
             params.hasOwnProperty(item)
-                ? this.remove(item) &&
+                ? vm.remove(item) &&
                     localStorage.setItem(item, JSON.stringify({
                         _Val: params[item],
                         _count_: count,
                     }))
                 : null;
         }
-    }
-    // 让一个设置仅能够调用一次
-    setOnce(params) {
+    };
+    vm.setOnce = function (params) {
         this.setCount(params, 1);
-    }
-    // 设置过期时间的方法,会使用一个叫time的,可自定义的插件
-    // 伪清除
-    setTime(params, expiration) {
-        expiration = Sprage.plugins.time(expiration);
-        if (typeof expiration == "string") {
+    };
+}
+
+
+/***/ }),
+/* 8 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initSetTime": () => (/* binding */ initSetTime)
+/* harmony export */ });
+function initSetTime(vm) {
+    vm.setTime = function (params, expiration) {
+        expiration = vm.plugins.time(expiration);
+        if (typeof expiration != "string" || "number") {
+            return;
         }
         for (let item in params) {
             params.hasOwnProperty(item)
@@ -256,62 +299,54 @@ class Sprage {
                 }))
                 : null;
         }
-    }
-    // 获取所有localStorage对象
-    getAll() {
-        let List = [];
-        for (let index = 0; index < localStorage.length; index++) {
-            let temp = localStorage.key(index);
-            let val = JSON.parse(localStorage.getItem(temp));
-            if (typeof val != "object") {
-                List.push({ [temp]: val });
-            }
-            else if ("_Val" in val) {
-                List.push({ [temp]: val._Val });
-            }
-            else {
-                List.push({ [temp]: val });
-            }
-        }
-        return List;
-    }
-    // 使用foreach遍历每个对象
-    forEach(fn) {
-        let List = this.getAll();
-        List.forEach((e) => {
-            for (let key in e) {
-                let value = e[key];
-                fn(key, value);
-            }
-        });
-    }
-    isFull(param) {
-        if (param) {
-            return !(Number(this.size(true)) + Number(param) < 5 * 1024);
-        }
-        return !(this.surplus(true) > 0);
-    }
-    size(isNumber = false) {
+    };
+}
+
+
+/***/ }),
+/* 9 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initClear": () => (/* binding */ initClear)
+/* harmony export */ });
+function initClear(vm) {
+    vm.clear = function () {
+        localStorage.clear();
+    };
+}
+
+
+/***/ }),
+/* 10 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initUtilsMethods": () => (/* binding */ initUtilsMethods)
+/* harmony export */ });
+function initUtilsMethods(vm) {
+    vm.size = function (isNumber = false) {
         let size = Object.entries(localStorage)
             .map((val) => val.join(""))
             .join("").length / 1024;
         return isNumber ? size.toFixed(2) : size.toFixed(2) + "KB";
-    }
-    surplus(isNumber = false) {
+    };
+    vm.surplus = function (isNumber = false) {
         let sum = 5 * 1024;
-        let cache = this.size(true);
+        let cache = vm.size(true);
         return isNumber
             ? (sum - cache).toFixed(2)
             : (sum - cache).toFixed(2) + "KB";
-    }
-    // 使用插件
-    static install(name, descriptor) {
-        Sprage.plugins[name] = descriptor;
-    }
+    };
+    vm.isFull = function (param) {
+        if (param) {
+            return !(Number(vm.size(true)) + Number(param) < 5 * 1024);
+        }
+        return !(vm.surplus(true) > 0);
+    };
 }
-Sprage.plugins = {};
-Sprage.install("time", new date().timeInvertFn);
-module.exports = Sprage;
 
 
 /***/ })
@@ -342,12 +377,65 @@ module.exports = Sprage;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
 /******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module used 'module' so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(0);
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _init__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+
+class Sprage {
+    constructor(option = { autoClear: true, exclude: [] }) {
+        this.autoClear = option.autoClear;
+        this.exclude = option.exclude ? option.exclude : [];
+        const vm = this;
+        this.init(vm);
+    }
+    init(vm) {
+        (0,_init__WEBPACK_IMPORTED_MODULE_0__.initMethods)(vm);
+    }
+    static install(name, descriptor) {
+        Sprage.plugins[name] = descriptor;
+    }
+}
+Sprage.plugins = {};
+// Sprage.install("time", new date().timeInvertFn);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Sprage);
+
+})();
+
+__webpack_exports__ = __webpack_exports__["default"];
 /******/ 	return __webpack_exports__;
 /******/ })()
 ;

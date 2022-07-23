@@ -1,6 +1,7 @@
-const StoreTest = require("../src/store");
+import Sprage from '../src/store'
 
-let store = new StoreTest();
+let store = new Sprage();
+console.log(store)
 // set方法测试
 test("set测试", () => {
   expect(store.set("foo", "boo")).toBe(true);

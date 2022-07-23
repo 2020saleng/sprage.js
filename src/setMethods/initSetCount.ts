@@ -1,8 +1,11 @@
-export function initSetCount(vm:any){
-    vm.setCount=function(params: KeyValueObject, count: number) {
+interface KeyValueObject {
+  [key: string]: any;
+}
+export function initSetCount(vm: any) {
+  vm.setCount = function (params: KeyValueObject, count: number) {
     for (let item in params) {
       params.hasOwnProperty(item)
-        ?vm.remove(item) &&
+        ? vm.remove(item) &&
           localStorage.setItem(
             item,
             JSON.stringify({
@@ -12,8 +15,8 @@ export function initSetCount(vm:any){
           )
         : null;
     }
-  }
-  vm.setOnce=function(params: KeyValueObject) {
+  };
+  vm.setOnce = function (params: KeyValueObject) {
     this.setCount(params, 1);
-  }
+  };
 }

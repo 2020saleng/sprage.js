@@ -1,1 +1,3 @@
-module.exports = require("./src/store");
+import Sprage from './src/store'
+
+export  default Sprage

@@ -1,13 +1,16 @@
-const utils=require("../utils")
-import {initSetCount} from './initSetCount'
-import {initSetTime} from './initSetTime'
+const utils = require("../utils");
+import { initSetCount } from "./initSetCount";
+import { initSetTime } from "./initSetTime";
 interface KeyValueObject {
   [key: string]: any;
 }
-export function initSetMethods(vm:any){
-    initSetCount(vm)
-    initSetTime(vm)
-    vm.set=function(param: string | KeyValueObject, val?: string | KeyValueObject): boolean {
+export function initSetMethods(vm: any) {
+  initSetCount(vm);
+  initSetTime(vm);
+  vm.set = function (
+    param: string | KeyValueObject,
+    val?: string | KeyValueObject
+  ): boolean {
     const self = vm;
     if (typeof param == "string" && val) {
       if (utils.isNull(val)) {
@@ -55,5 +58,5 @@ export function initSetMethods(vm:any){
         }
       }
     }
-  }
+  };
 }

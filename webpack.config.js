@@ -3,8 +3,8 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    "Sprage.min": "./app.ts",
-    Sprage: "./app.ts",
+    "Sprage.min": "./src/store.ts",
+    "Sprage": "./src/store.ts",
   },
   module: {
     rules: [
@@ -12,24 +12,7 @@ module.exports = {
         test: /\.tsx?$/,
         use: "ts-loader",
         exclude: /node_modules/, //表示node_modules中的tsx文件不做处理
-      },
-      {
-    test: /\.js$/,
-    use: {
-      loader: 'babel-loader',
-      options: {
-        sourceType: 'unambiguous', 
-        presets: [
-            ['babel-preset-env', {
-                targets: {
-                    browser: ['chrome']
-                }
-            }]
-        ],
       }
-    },
-    exclude: '/node_modules/'
-  }
     ],
   },
   output: {
@@ -37,14 +20,15 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     globalObject: "this",
     library: "Sprage",
-    libraryTarget: "umd",
+    libraryExport: 'default',
+    libraryTarget: 'umd'
   },
   resolve: {
     extensions: [".ts", ".js"],
   },
   mode: "none", //因为自带的只能指定一种环境，所以我们直接关闭，利用插件实现
   optimization: {
-//   代码分割
+    //   代码分割
     minimize: true, //开启插件
     minimizer: [
       new TerserPlugin({
