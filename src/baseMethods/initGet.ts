@@ -12,7 +12,7 @@ export function initGet(vm: any): void {
   vm.get = function (param: string) {
     let str: string | tokenObject | KeyValueObject = getStorageInit(param);
     if (typeof str == "string") {
-      return str;
+      return str
     } else if (str && str._token_) {
       if (utils.checkTime(str._token_)) {
         return str._Val;
@@ -48,5 +48,13 @@ export function initGet(vm: any): void {
 }
 function getStorageInit(key: string): any {
   let str: string | null = localStorage.getItem(key);
-  return str == null ? null : JSON.parse(str);
+  if(str===null){return null}
+  str=JSON.parse(str)
+  if(str!=null){
+    try{
+     str=JSON.parse(str)
+    }catch{
+    }
+    }
+  return str 
 }

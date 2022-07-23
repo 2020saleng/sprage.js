@@ -16,13 +16,10 @@
       autoClear: true,
       exclude: ["only"],
     });
-    console.log(store)
-    const charTxt = "0";
-    let count = (9 * 1024 * 1024) / 2;
-    let content = new Array(count).fill(charTxt).join("");
-    store.set("only", "1");
-    store.set("long", content);
-    store.set("long2", content);
+    console.log(store);
+    store.clear()
+    store.set({foo:{ one: "ts", two: "js" }});
+   console.log( store.get("foo"))
     // store.set('foo', 'boo')
     // console.log(store.get('foo')) //'boo'
     // store.set({
@@ -44,6 +41,6 @@
     console.log(store.size());
     console.log(store.surplus()); //null
     console.log(store.getAll());
-    store.clear();
+    console.log(store.remove(["foo"]))
   </script>
 </html>

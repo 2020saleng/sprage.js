@@ -1,3 +1,3 @@
-import Sprage from './src/store'
+import Sprage from "./src/store";
 
-export  default Sprage
+export default Sprage;

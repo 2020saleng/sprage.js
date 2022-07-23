@@ -5,16 +5,17 @@ export function initRemove(vm: any) {
         removeItem(vm, param);
       } else {
         param.forEach((element) => {
-          this.removeItem(vm, element);
+          removeItem(vm, element);
         });
       }
       return true;
-    } catch {
+    } catch(e) {
       return false;
     }
   };
 }
 
 function removeItem(vm: any, param: string): void {
+    console.log(param)
   vm.has(param) ? localStorage.removeItem(param) : null;
 }

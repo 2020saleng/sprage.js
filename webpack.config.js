@@ -4,7 +4,7 @@ module.exports = {
   mode: "development",
   entry: {
     "Sprage.min": "./src/store.ts",
-    "Sprage": "./src/store.ts",
+    Sprage: "./src/store.ts",
   },
   module: {
     rules: [
@@ -12,7 +12,7 @@ module.exports = {
         test: /\.tsx?$/,
         use: "ts-loader",
         exclude: /node_modules/, //表示node_modules中的tsx文件不做处理
-      }
+      },
     ],
   },
   output: {
@@ -20,8 +20,8 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     globalObject: "this",
     library: "Sprage",
-    libraryExport: 'default',
-    libraryTarget: 'umd'
+    libraryExport: "default",
+    libraryTarget: "umd",
   },
   resolve: {
     extensions: [".ts", ".js"],

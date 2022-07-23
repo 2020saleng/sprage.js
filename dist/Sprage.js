@@ -94,7 +94,18 @@ function initGet(vm) {
 }
 function getStorageInit(key) {
     let str = localStorage.getItem(key);
-    return str == null ? null : JSON.parse(str);
+    if (str === null) {
+        return null;
+    }
+    str = JSON.parse(str);
+    if (str != null) {
+        try {
+            str = JSON.parse(str);
+        }
+        catch (_a) {
+        }
+    }
+    return str;
 }
 
 
@@ -151,17 +162,19 @@ function initRemove(vm) {
             }
             else {
                 param.forEach((element) => {
-                    this.removeItem(vm, element);
+                    removeItem(vm, element);
                 });
             }
             return true;
         }
-        catch (_a) {
+        catch (e) {
+            console.log(e);
             return false;
         }
     };
 }
 function removeItem(vm, param) {
+    console.log(param);
     vm.has(param) ? localStorage.removeItem(param) : null;
 }
 
