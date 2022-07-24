@@ -1,5 +1,4 @@
 import { initMethods } from "./init";
-import { initPlugins } from "./plugins/init";
 const date = require("./plugins/date");
 interface pluginsObject {
   [key: string]: pluginsFunc;

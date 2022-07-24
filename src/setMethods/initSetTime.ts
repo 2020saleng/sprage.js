@@ -8,9 +8,13 @@ export function initSetTime(vm: any): void {
   ): void {
     let { constructor } = this;
     expiration = constructor.plugins.time(expiration);
-    let typeList:string[]=['number','string']
-    if( typeList.every((item)=>{return typeof item==item})){
-        return
+    let typeList: string[] = ["number", "string"];
+    if (
+      typeList.every((item) => {
+        return typeof item == item;
+      })
+    ) {
+      return;
     }
     for (let item in params) {
       params.hasOwnProperty(item)

@@ -79,7 +79,13 @@ function initGet(vm) {
         for (let index = 0; index < localStorage.length; index++) {
             let temp = localStorage.key(index);
             let val = JSON.parse(localStorage.getItem(temp));
+            console.log(val);
             if (typeof val != "object") {
+                try {
+                    val = JSON.parse(val);
+                }
+                catch (_a) {
+                }
                 List.push({ [temp]: val });
             }
             else if ("_Val" in val) {
@@ -300,9 +306,10 @@ function initSetTime(vm) {
     vm.setTime = function (params, expiration) {
         let { constructor } = this;
         expiration = constructor.plugins.time(expiration);
-        let typeList = ['number', 'string'];
-        if (typeList.every((item) => { return typeof item == item; })) {
-            console.log(typeof expiration == 'number');
+        let typeList = ["number", "string"];
+        if (typeList.every((item) => {
+            return typeof item == item;
+        })) {
             return;
         }
         for (let item in params) {

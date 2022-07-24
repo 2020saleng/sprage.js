@@ -148,11 +148,3 @@ test("getAll测试", () => {
   store.set({ hello: "world", MVC: "Vue" });
   expect(store.getAll()).toMatchObject([{ hello: "world" }, { MVC: "Vue" }]);
 });
-// foreach测试
-test("forEach测试", () => {
-  expect(
-    store.forEach((key: string, val: any) => {
-      return key + val;
-    })
-  ).toBe(undefined);
-});

@@ -35,7 +35,12 @@ export function initGet(vm: any): void {
     for (let index = 0; index < localStorage.length; index++) {
       let temp = localStorage.key(index)!;
       let val = JSON.parse(localStorage.getItem(temp)!);
+        console.log(val)
       if (typeof val != "object") {
+        try{
+           val =JSON.parse(val)
+        }catch{
+        }
         List.push({ [temp]: val });
       } else if ("_Val" in val) {
         List.push({ [temp]: val._Val });

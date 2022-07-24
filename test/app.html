@@ -18,9 +18,11 @@
     });
     console.log(store);
     store.clear();
-    store.set({ foo: { one: "ts", two: "js" } });
-    console.log(store.setTime({ boo: "bable" }, "1s"));
-   console.log( store.getAll())
+    store.set({ foo: { one: {hi:"hello"}, two: {hi:{hi:{hi:{hi:"hello"}}}} } });
+   store.set({ boo: function(){
+        console.log(12345)
+    }})
+    console.log(store.getAll());
     // store.set('foo', 'boo')
     // console.log(store.get('foo')) //'boo'
     // store.set({
