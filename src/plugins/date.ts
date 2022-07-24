@@ -1,3 +1,4 @@
+// 处理时间戳的插件
 class TimeInver {
   private unitList = ["s", "min", "h", "day"];
   private timeList = [1000, 60000, 3600000, 86400000];

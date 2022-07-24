@@ -1,3 +1,4 @@
+// 初始化set方法
 const utils = require("../utils");
 import { initSetCount } from "./initSetCount";
 import { initSetTime } from "./initSetTime";
