@@ -6,11 +6,11 @@ export function initSetTime(vm: any): void {
     params: KeyValueObject,
     expiration: number | string
   ): void {
-    console.log(this.constructor)
-    let {constructor}=this
+    let { constructor } = this;
     expiration = constructor.plugins.time(expiration);
-    if (typeof expiration != "string" || "number") {
-      return;
+    let typeList:string[]=['number','string']
+    if( typeList.every((item)=>{return typeof item==item})){
+        return
     }
     for (let item in params) {
       params.hasOwnProperty(item)

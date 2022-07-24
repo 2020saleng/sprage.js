@@ -298,10 +298,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function initSetTime(vm) {
     vm.setTime = function (params, expiration) {
-        console.log(this.constructor);
         let { constructor } = this;
         expiration = constructor.plugins.time(expiration);
-        if (typeof expiration != "string" || "number") {
+        let typeList = ['number', 'string'];
+        if (typeList.every((item) => { return typeof item == item; })) {
+            console.log(typeof expiration == 'number');
             return;
         }
         for (let item in params) {
