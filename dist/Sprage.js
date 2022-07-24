@@ -102,8 +102,7 @@ function getStorageInit(key) {
         try {
             str = JSON.parse(str);
         }
-        catch (_a) {
-        }
+        catch (_a) { }
     }
     return str;
 }
@@ -168,7 +167,6 @@ function initRemove(vm) {
             return true;
         }
         catch (e) {
-            console.log(e);
             return false;
         }
     };
@@ -300,7 +298,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function initSetTime(vm) {
     vm.setTime = function (params, expiration) {
-        expiration = vm.plugins.time(expiration);
+        console.log(this.constructor);
+        let { constructor } = this;
+        expiration = constructor.plugins.time(expiration);
         if (typeof expiration != "string" || "number") {
             return;
         }
@@ -360,6 +360,57 @@ function initUtilsMethods(vm) {
         return !(vm.surplus(true) > 0);
     };
 }
+
+
+/***/ }),
+/* 11 */
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+class TimeInver {
+    constructor() {
+        this.unitList = ["s", "min", "h", "day"];
+        this.timeList = [1000, 60000, 3600000, 86400000];
+    }
+    formatTimeInvert(param) {
+        const utils = __webpack_require__(3);
+        return utils.formatTimeInvert.call(this, param);
+    }
+    getIndex(param) {
+        for (let i = 0; i < this.unitList.length; i++) {
+            if (param.indexOf(this.unitList[i]) != -1) {
+                return i;
+            }
+        }
+        return undefined;
+    }
+    afterTime(param, index) {
+        const now = new Date().getTime();
+        let time = Number(param.slice(0, param.length - this.unitList[index].length));
+        if (isNaN(time)) {
+            throw "time should be a number";
+        }
+        return now + time * this.timeList[index];
+    }
+    afterTimeInvert(param) {
+        param = param.trim();
+        let index = this.getIndex(param);
+        if (index === undefined) {
+            throw "unit is wrongfulness";
+        }
+        return this.afterTime(param, index);
+    }
+    timeInvert(params) {
+        return params.includes("-")
+            ? this.formatTimeInvert(params)
+            : this.afterTimeInvert(params);
+    }
+    timeInvertFn(params) {
+        let time = new TimeInver();
+        return time.timeInvert.call(time, params);
+    }
+}
+module.exports = TimeInver;
 
 
 /***/ })
@@ -428,6 +479,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _init__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 
+const date = __webpack_require__(11);
 class Sprage {
     constructor(option = { autoClear: true, exclude: [] }) {
         this.autoClear = option.autoClear;
@@ -439,11 +491,12 @@ class Sprage {
         (0,_init__WEBPACK_IMPORTED_MODULE_0__.initMethods)(vm);
     }
     static install(name, descriptor) {
-        Sprage.plugins[name] = descriptor;
+        this.plugins[name] = descriptor;
     }
 }
 Sprage.plugins = {};
-// Sprage.install("time", new date().timeInvertFn);
+// initPlugins(Sprage)
+Sprage.install("time", new date().timeInvertFn);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Sprage);
 
 })();

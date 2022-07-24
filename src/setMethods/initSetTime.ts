@@ -6,7 +6,9 @@ export function initSetTime(vm: any): void {
     params: KeyValueObject,
     expiration: number | string
   ): void {
-    expiration = vm.plugins.time(expiration);
+    console.log(this.constructor)
+    let {constructor}=this
+    expiration = constructor.plugins.time(expiration);
     if (typeof expiration != "string" || "number") {
       return;
     }

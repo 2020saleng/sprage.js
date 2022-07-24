@@ -17,9 +17,10 @@
       exclude: ["only"],
     });
     console.log(store);
-    store.clear()
-    store.set({foo:{ one: "ts", two: "js" }});
-   console.log( store.get("foo"))
+    store.clear();
+    store.set({ foo: { one: "ts", two: "js" } });
+    console.log(store.get("foo"));
+    console.log(store.setTime({boo:'bable'},'1s'))
     // store.set('foo', 'boo')
     // console.log(store.get('foo')) //'boo'
     // store.set({
@@ -38,9 +39,5 @@
     // console.log(store.has('foo')) //true
     // store.remove(['foo', 'name', 'age'])
     // store.clear()
-    console.log(store.size());
-    console.log(store.surplus()); //null
-    console.log(store.getAll());
-    console.log(store.remove(["foo"]))
   </script>
 </html>

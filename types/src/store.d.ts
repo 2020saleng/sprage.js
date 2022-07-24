@@ -12,7 +12,7 @@ declare class Sprage {
     protected exclude: string[];
     static plugins: pluginsObject;
     constructor(option?: KeyValueObject);
-    init(vm: any): void;
+    private init;
     static install(name: string, descriptor: any): void;
 }
 export default Sprage;

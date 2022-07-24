@@ -1,4 +1,5 @@
 import { initMethods } from "./init";
+import {initPlugins} from './plugins/init'
 const date = require("./plugins/date");
 interface pluginsObject {
   [key: string]: pluginsFunc;
@@ -19,12 +20,13 @@ class Sprage {
     const vm: any = this;
     this.init(vm);
   }
-  init(vm: any) {
+ private init(vm: any) {
     initMethods(vm)
   }
   static install(name: string, descriptor: any) {
     this.plugins[name] = descriptor;
   }
 }
+// initPlugins(Sprage)
 Sprage.install("time", new date().timeInvertFn);
 export default Sprage

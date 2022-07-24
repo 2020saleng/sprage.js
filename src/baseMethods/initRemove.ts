@@ -9,13 +9,13 @@ export function initRemove(vm: any) {
         });
       }
       return true;
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   };
 }
 
 function removeItem(vm: any, param: string): void {
-    console.log(param)
+  console.log(param);
   vm.has(param) ? localStorage.removeItem(param) : null;
 }

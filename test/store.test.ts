@@ -1,6 +1,6 @@
 import Sprage from "../src/store";
 
-let store:any = new Sprage();
+let store: any = new Sprage();
 console.log(store);
 // set方法测试
 test("set测试", () => {

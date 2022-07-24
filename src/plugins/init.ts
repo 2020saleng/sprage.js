@@ -1,3 +1,1 @@
-export function initPlugins (){
-
-}
+export function initPlugins() {}
