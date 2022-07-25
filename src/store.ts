@@ -22,6 +22,7 @@ class Sprage {
   private init(vm: any) {
     initMethods(vm);
   }
+// 为类添加插件的方法
   static install(name: string, descriptor: any) {
     this.plugins[name] = descriptor;
   }
