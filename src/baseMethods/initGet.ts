@@ -15,16 +15,16 @@ export function initGet(vm: any): void {
     let str: string | tokenObject | KeyValueObject = getStorageInit(param);
     if (typeof str == "string") {
       return str;
-// 当存在时间戳时检查时间
+      // 当存在时间戳时检查时间
     } else if (str && str._token_) {
       if (utils.checkTime(str._token_)) {
         return str._Val;
       }
       this.remove(param);
       return null;
-// 检测有没有设置存在次数
+      // 检测有没有设置存在次数
     } else if (str && str._count_ != undefined) {
-// 存在且这个值大于0，则将这个值减一
+      // 存在且这个值大于0，则将这个值减一
       if (str._count_ > 0) {
         let count: number = str._count_ - 1;
         this.setCount({ [param]: str._Val }, count);
@@ -35,7 +35,7 @@ export function initGet(vm: any): void {
     }
     return str;
   };
-// 获取全部的键值对
+  // 获取全部的键值对
   vm.getAll = function (): KeyValueObject[] {
     let List = [];
     for (let index = 0; index < localStorage.length; index++) {
@@ -43,7 +43,7 @@ export function initGet(vm: any): void {
       let val = JSON.parse(localStorage.getItem(temp)!);
       console.log(val);
       if (typeof val != "object") {
-// 不是对象时需要尝试着继续解析
+        // 不是对象时需要尝试着继续解析
         try {
           val = JSON.parse(val);
         } catch {}

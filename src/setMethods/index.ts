@@ -6,6 +6,7 @@ interface KeyValueObject {
   [key: string]: any;
 }
 export function initSetMethods(vm: any) {
+// 先初始化其他set方法
   initSetCount(vm);
   initSetTime(vm);
   vm.set = function (
@@ -28,12 +29,14 @@ export function initSetMethods(vm: any) {
       return false;
     }
     return true;
+// 对原生settime方法进行封装
     function setItem(key: string, val: any): void {
       try {
         localStorage.setItem(key, JSON.stringify(val));
       } catch {
         let size =
           <number>self.size(true) + key.length + JSON.stringify(val).length;
+        // 如果内存满则不断清除前面的内存来存储
         if (self.isFull(size) && self.autoClear) {
           while (true) {
             let index = 0;

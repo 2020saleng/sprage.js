@@ -1,7 +1,7 @@
 // 初始化remove方法
 export function initRemove(vm: any) {
   vm.remove = function (param: string | string[]): boolean {
-// 根据参数类型进行处理
+    // 根据参数类型进行处理
     try {
       if (typeof param == "string") {
         removeItem(vm, param);
