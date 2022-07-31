@@ -1,6 +1,7 @@
 interface KeyValueObject {
   [key: string]: any;
 }
+// 初始化获取次数的方法
 export function initSetCount(vm: any) {
   vm.setCount = function (params: KeyValueObject, count: number) {
     for (let item in params) {
