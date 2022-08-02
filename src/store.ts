@@ -19,6 +19,7 @@ class Sprage {
     const vm: any = this;
     this.init(vm);
   }
+// 初始化挂载类上的所有方法
   private init(vm: any) {
     initMethods(vm);
   }
