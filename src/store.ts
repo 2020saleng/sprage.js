@@ -19,7 +19,7 @@ class Sprage {
     const vm: any = this;
     this.init(vm);
   }
-// 初始化挂载类上的所有方法
+  // 初始化挂载类上的所有方法
   private init(vm: any) {
     initMethods(vm);
   }
@@ -29,5 +29,6 @@ class Sprage {
   }
 }
 // initPlugins(Sprage)
+// 初始化处理时间的插件方法
 Sprage.install("time", new date().timeInvertFn);
 export default Sprage;
