@@ -12,24 +12,10 @@
   </body>
   <script src="../dist/Sprage.js"></script>
   <script>
-    let store = new Sprage({
-      autoClear: true,
-      exclude: ["only"],
-    });
+    let store = new Sprage();
     console.log(store);
     store.clear();
-    store.set({
-      foo: {
-        one: { hi: "hello" },
-        two: { hi: { hi: { hi: { hi: "hello" } } } },
-      },
-    });
-    store.set({
-      boo: function () {
-        console.log(12345);
-      },
-    });
-    console.log(store.getAll());
+    store.set({boo:'foo'});
     // store.set('foo', 'boo')
     // console.log(store.get('foo')) //'boo'
     // store.set({
