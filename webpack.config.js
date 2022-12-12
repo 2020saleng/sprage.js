@@ -3,8 +3,8 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    "Sprage.min": "./src/store.ts",
-    Sprage: "./src/store.ts",
+    "Sprage.min": "./src/store.js",
+    Sprage: "./src/store.js",
   },
   module: {
     rules: [

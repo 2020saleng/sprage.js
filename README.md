@@ -170,3 +170,4 @@ Sprage.install("time" /*plugins*/);
 源码已放在 gitee，供大家学习交流
 
 https://gitee.com/yan-taomeng/sprage.js
+
