@@ -34,5 +34,18 @@
     // console.log(store.has('foo')) //true
     // store.remove(['foo', 'name', 'age'])
     // store.clear()
+
+    const a=()=>{
+            console.log(123)
+        }
+    let arr=[a,new Date(),undefined,NaN,new RegExp(/[\w]/)]
+    console.log(arr)
+    let b=JSON.parse(JSON.stringify(arr))
+    console.log(b)
+    function Vue(){
+        this.vm=1
+    }
+    let c=new Blob()
+    console.log(  Object.prototype.toString.call(c))
   </script>
 </html>
