@@ -15,37 +15,13 @@
     let store = new Sprage();
     console.log(store);
     store.clear();
-    store.set({boo:'foo'});
-    // store.set('foo', 'boo')
-    // console.log(store.get('foo')) //'boo'
-    // store.set({
-    //     name: 'sam',
-    //     age: '11'
-    // })
-    // console.log(store.get('name')) //sam
-    // console.log(store.get('age')) //'11'
-    // store.set(
-    //     'msg', {
-    //         title: 'ts',
-    //         num: 12
-    //     }
-    // )
-    // console.log(store.get('msg')) //{title: 'ts',num: 12}
-    // console.log(store.has('foo')) //true
-    // store.remove(['foo', 'name', 'age'])
-    // store.clear()
-
-    const a=()=>{
-            console.log(123)
+    store.set({boo:'foo'}); 
+    let obj={
+        a:12,
+        b:'a'
         }
-    let arr=[a,new Date(),undefined,NaN,new RegExp(/[\w]/)]
-    console.log(arr)
-    let b=JSON.parse(JSON.stringify(arr))
-    console.log(b)
-    function Vue(){
-        this.vm=1
-    }
-    let c=new Blob()
-    console.log(  Object.prototype.toString.call(c))
+    let a=NaN
+    console.log(a.toString())
+    console.log(Object.prototype.toString.call(Infinity))
   </script>
 </html>
