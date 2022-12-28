@@ -1,3 +1,4 @@
 export function getter(key){
-   return localStorage.getItem(key)
+   const value= localStorage.getItem(key)
+   return this.compiler.parse(value)
 }

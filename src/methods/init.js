@@ -11,6 +11,6 @@ export  function initMethods(vm){
     }
     vm.methods=MethodsPool
     Object.keys(vm.methods).forEach(method=>{
-        vm[method]=MethodsPool[method]
+        vm[method]=MethodsPool[method].bind(vm)
     })
 }

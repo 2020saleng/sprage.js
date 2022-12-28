@@ -1,12 +1,10 @@
-import {compiler} from '../compiler/index'
-
 export function setter(objectArgs){
    Object.keys(objectArgs).forEach(key=>{
-        setItem(key,objectArgs[key])
+        setItem(key,objectArgs[key],this)
     })
 }
 
-function setItem(key,value){
-     value=compiler(value)
+function setItem(key,value,vm){
+     value=vm.compiler.compiler(value)
     localStorage.setItem(key,value)
 }

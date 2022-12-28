@@ -4,12 +4,12 @@ export class Compiler{
     this.loaders=options.loaders
   }
   getInitData(s=null,k=null,c=null,o=null){
-    return Object.create({
+    return {
       s,
       k,
       c,
       o
-    })
+    }
   }
   compiler(value){
       const TYPE=getType(value)
@@ -41,6 +41,7 @@ export class Compiler{
         return loader.key==key
       })
       if(!parseLoader){return}
+      console.log(row)
       return parseLoader.parse(row.s)
   }
   jsonStringify(object){

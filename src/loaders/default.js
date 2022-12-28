@@ -44,23 +44,41 @@ export const defaultLoaders=[
         },
         parse:(compilered)=>{
             return Symbol(compilered)
-        },
+        }
+    },
        {
         type:'bigint',
         compiler:defaultCompiler,
         parse:(compilered)=>{
             return BigInt(compilered)
-        },
+        }
+    },
        {
         type:'nan',
         compiler:defaultCompiler,
         parse:(compilered)=>{
             return NaN
-        },
+        }
+    },
        {
         type:'infinity',
         compiler:defaultCompiler,
         parse:(compilered)=>{
             return infinity
         }
+    },
+    {
+        type:'object',
+        compiler:(compilered)=>{return compilered},
+        parse:(compilered)=>{
+            return compilered
+        }
+    },
+    {
+        type:'array',
+        compiler:(compilered)=>{return compilered},
+        parse:(compilered)=>{
+            return compilered
+        }
+    }
 ]
